@@ -15,7 +15,7 @@ android {
         instrumentTest.setRoot('tests')
     }
     defaultConfig {
-        applicationId "fi.tamk.gravitation"
+        applicationId "fi.tamk.MainGame"
         minSdkVersion 8
         targetSdkVersion 20
     }
@@ -64,7 +64,7 @@ task run(type: Exec) {
     }
 
     def adb = path + "/platform-tools/adb"
-    commandLine "$adb", 'shell', 'am', 'start', '-n', 'fi.tamk.gravitation/fi.tamk.gravitation.AndroidLauncher'
+    commandLine "$adb", 'shell', 'am', 'start', '-n', 'fi.tamk.MainGame/fi.tamk.MainGame.AndroidLauncher'
 }
 
 // sets up the Android Eclipse project, using the old Ant based build.
