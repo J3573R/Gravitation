@@ -36,11 +36,7 @@ public class Wall {
     }
 
     public void move(float x, float y){
-        wall.destroyFixture(wall.getFixtureList().first());
-        world.destroyBody(wall);
-        this.x = x;
-        this.y = y;
-        create();
+        wall.setTransform(x, y, 0);
     }
 
     private void create(){
