@@ -26,7 +26,7 @@ public class Player {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.density = 1f;
-        fixtureDef.restitution = 0.1f;
+        fixtureDef.restitution = 0.5f;
         fixtureDef.friction = 10f;
 
         PolygonShape box = new PolygonShape();

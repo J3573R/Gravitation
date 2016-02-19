@@ -18,13 +18,15 @@ public class InputHandler {
         boolean is_moving = false;
 
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            player.body.applyForceToCenter(-20, 0, true);
+            Vector2 vel = player.body.getLinearVelocity();
+            player.body.applyForceToCenter(-20, vel.y, true);
             //player.body.applyLinearImpulse(new Vector2(-1, 0), new Vector2(0, 0), true);
             is_moving = true;
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            player.body.applyForceToCenter(20, 0, true);
+            Vector2 vel = player.body.getLinearVelocity();
+            player.body.applyForceToCenter(20, vel.y, true);
             is_moving = true;
         }
 
@@ -36,7 +38,15 @@ public class InputHandler {
             //player.body.applyLinearImpulse(new Vector2(0, 1), new Vector2(0, 0), true);
         }
 
+        if(Gdx.input.isTouched()) {
+
+        }
+
+
+
         return is_moving;
     }
 
 }
+
+

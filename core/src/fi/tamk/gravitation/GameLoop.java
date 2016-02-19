@@ -1,11 +1,10 @@
 package fi.tamk.gravitation;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
@@ -18,10 +17,14 @@ public class GameLoop extends ScreenAdapter {
     OrthographicCamera camera;
     World world;
     Player player;
-    Body ground;
     Box2DDebugRenderer debug = new Box2DDebugRenderer();
     InputHandler input;
     GameCollision collision;
+    Wall ground;
+
+    Wall leftWall;
+    Wall rightWall;
+
 
     public GameLoop(MainGame game){
         this.game = game;
@@ -36,31 +39,34 @@ public class GameLoop extends ScreenAdapter {
         collision = new GameCollision(player);
         world.setContactListener(collision);
 
-        BodyDef groundDef = new BodyDef();
-        groundDef.type = BodyDef.BodyType.StaticBody;
-        groundDef.position.set(camera.viewportWidth / 2, 0);
+        ground = new Wall(world);
+        ground.init(camera.viewportWidth / 2, 0f, camera.viewportWidth / 2, 0.1f, "ground");
 
-        PolygonShape groundShape = new PolygonShape();
-        groundShape.setAsBox(camera.viewportWidth / 2, 0.1f);
+        leftWall = new Wall(world);
+        //leftWall.bodyDef.type = BodyDef.BodyType.KinematicBody;
+        leftWall.init(0f, camera.viewportHeight / 2, 0.1f, camera.viewportHeight / 2, "wall");
 
-        ground = world.createBody(groundDef);
+        rightWall = new Wall(world);
+        //rightWall.bodyDef.type = BodyDef.BodyType.KinematicBody;
+        rightWall.init(camera.viewportWidth, camera.viewportHeight / 2, 0.1f, camera.viewportHeight / 2, "wall");
 
-        ground.createFixture(groundShape, 0);
 
-        ground.setUserData("ground");
 
-        
+
 
     }
 
     @Override
     public void render(float delta) {
         game.batch.setProjectionMatrix(camera.combined);
+        //camera.position.set(player.body.getPosition(), 0);
         camera.update();
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        leftWall.move(0f, player.body.getPosition().y);
+        rightWall.move(camera.viewportWidth, player.body.getPosition().y);
         input.move();
 
 

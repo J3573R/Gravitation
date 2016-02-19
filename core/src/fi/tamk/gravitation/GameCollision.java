@@ -24,7 +24,6 @@ public class GameCollision implements ContactListener {
             this.player.jumping = false;
         }
 
-        System.out.println("ASD");
         //if(a.getUserData() instanceof Obstacle&&b.getUserData() instanceof Car)
         //{
 
