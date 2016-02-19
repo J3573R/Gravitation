@@ -12,10 +12,12 @@ public class Player {
     private World world;
     private Texture img;
     Body body;
+    public boolean jumping;
 
     public Player(World world){
         this.world = world;
         img = new Texture("badlogic.jpg");
+        jumping = false;
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -24,14 +26,17 @@ public class Player {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.density = 1f;
-        fixtureDef.restitution = 0.5f;
-        fixtureDef.friction = 0.2f;
+        fixtureDef.restitution = 0.1f;
+        fixtureDef.friction = 10f;
 
         PolygonShape box = new PolygonShape();
         box.setAsBox(0.5f, 0.5f);
-
         fixtureDef.shape = box;
+
         body.createFixture(fixtureDef);
+        body.setFixedRotation(true);
+
+        body.setUserData("player");
 
     }
 

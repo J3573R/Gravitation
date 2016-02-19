@@ -1,5 +1,6 @@
 package fi.tamk.gravitation;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Camera;
@@ -19,6 +20,8 @@ public class GameLoop extends ScreenAdapter {
     Player player;
     Body ground;
     Box2DDebugRenderer debug = new Box2DDebugRenderer();
+    InputHandler input;
+    GameCollision collision;
 
     public GameLoop(MainGame game){
         this.game = game;
@@ -28,6 +31,10 @@ public class GameLoop extends ScreenAdapter {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 16, 9);
         player = new Player(world);
+
+        input = new InputHandler(player);
+        collision = new GameCollision(player);
+        world.setContactListener(collision);
 
         BodyDef groundDef = new BodyDef();
         groundDef.type = BodyDef.BodyType.StaticBody;
@@ -40,6 +47,10 @@ public class GameLoop extends ScreenAdapter {
 
         ground.createFixture(groundShape, 0);
 
+        ground.setUserData("ground");
+
+        
+
     }
 
     @Override
@@ -49,6 +60,9 @@ public class GameLoop extends ScreenAdapter {
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        input.move();
+
 
         game.batch.begin();
         player.draw(game.batch);
