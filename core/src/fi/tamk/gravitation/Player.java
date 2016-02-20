@@ -26,11 +26,12 @@ public class Player {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.density = 1f;
-        fixtureDef.restitution = 0.5f;
-        fixtureDef.friction = 10f;
+        fixtureDef.restitution = 0.2f;
+        fixtureDef.friction = 1f;
 
         PolygonShape box = new PolygonShape();
         box.setAsBox(0.5f, 0.5f);
+
         fixtureDef.shape = box;
 
         body.createFixture(fixtureDef);

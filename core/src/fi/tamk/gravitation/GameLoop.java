@@ -25,6 +25,8 @@ public class GameLoop extends ScreenAdapter {
     Wall leftWall;
     Wall rightWall;
 
+    Arrow arrow;
+
 
     public GameLoop(MainGame game){
         this.game = game;
@@ -34,8 +36,9 @@ public class GameLoop extends ScreenAdapter {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 16, 9);
         player = new Player(world);
+        arrow = new Arrow(world);
 
-        input = new InputHandler(player);
+        input = new InputHandler(player, arrow);
         collision = new GameCollision(player);
         world.setContactListener(collision);
 
@@ -52,14 +55,17 @@ public class GameLoop extends ScreenAdapter {
 
 
 
-
-
     }
 
     @Override
     public void render(float delta) {
         game.batch.setProjectionMatrix(camera.combined);
-        //camera.position.set(player.body.getPosition(), 0);
+        Vector2 camPos = new Vector2(player.body.getPosition());
+        if(camPos.y < 9 / 2) {
+            camPos.y = 9/2;
+        }
+        System.out.println(camPos);
+        camera.position.set(camPos, 0);
         camera.update();
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -71,6 +77,7 @@ public class GameLoop extends ScreenAdapter {
 
 
         game.batch.begin();
+        arrow.draw(game.batch);
         player.draw(game.batch);
         game.batch.end();
         debug.render(world, camera.combined);

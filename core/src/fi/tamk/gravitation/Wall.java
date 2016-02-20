@@ -44,7 +44,7 @@ public class Wall {
         wall = world.createBody(bodyDef);
         PolygonShape wallShape = new PolygonShape();
         wallShape.setAsBox(this.width, this.height);
-        wall.createFixture(wallShape, 0);
+        wall.createFixture(wallShape, 1f);
         wallShape.dispose();
 
         wall.setUserData(this.userdata);
